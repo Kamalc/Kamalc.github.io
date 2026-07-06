@@ -1,12 +1,326 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Kamal — App Developer</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mahjong: Legends of the Nile</title>
+  <meta name="description" content="Mahjong: Legends of the Nile — an Egyptian-themed mahjong solitaire puzzle game. Match tiles, beat the timer, and climb the leaderboards. Free to play." />
+  <meta name="theme-color" content="#1B3A5C" />
+
+  <!-- Open Graph (nice link previews when shared) -->
+  <meta property="og:title" content="Mahjong: Legends of the Nile" />
+  <meta property="og:description" content="An Egyptian-themed mahjong solitaire puzzle. Match tiles, beat the timer, save your streak. Free on Google Play." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kamalc.github.io/" />
+
+  <style>
+    :root {
+      --indigo:      #1B3A5C;
+      --indigo-deep: #142B44;
+      --indigo-dark: #0E1E30;
+      --gold:        #C9A84C;
+      --gold-bright: #E4C56A;
+      --cream:       #F3E9D2;
+      --cream-soft:  #D8CBA8;
+      --ink:         #0A141F;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--cream);
+      background:
+        radial-gradient(circle at 50% -10%, rgba(201,168,76,0.18), transparent 55%),
+        linear-gradient(180deg, var(--indigo) 0%, var(--indigo-deep) 45%, var(--indigo-dark) 100%);
+      background-attachment: fixed;
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    a { color: var(--gold-bright); text-decoration: none; }
+    a:hover, a:focus { text-decoration: underline; }
+
+    .wrap { max-width: 880px; margin: 0 auto; padding: 0 22px; }
+
+    /* ---------- Hero ---------- */
+    header.hero {
+      text-align: center;
+      padding: 72px 0 48px;
+    }
+
+    .ankh {
+      font-size: 46px;
+      color: var(--gold);
+      display: block;
+      margin: 0 auto 14px;
+      line-height: 1;
+    }
+
+    header.hero h1 {
+      font-size: clamp(30px, 6vw, 52px);
+      letter-spacing: 1px;
+      color: var(--gold-bright);
+      text-shadow: 0 2px 14px rgba(0,0,0,0.45);
+      margin-bottom: 10px;
+    }
+
+    header.hero p.tagline {
+      font-size: clamp(15px, 2.6vw, 19px);
+      color: var(--cream-soft);
+      max-width: 620px;
+      margin: 0 auto 30px;
+    }
+
+    /* ---------- Buttons ---------- */
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 13px 26px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: 0.4px;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+    .btn:hover, .btn:focus { transform: translateY(-2px); text-decoration: none; }
+
+    .btn-gold {
+      background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+      color: var(--ink);
+      box-shadow: 0 6px 18px rgba(201,168,76,0.35);
+    }
+    .btn-stone {
+      background: rgba(255,255,255,0.06);
+      color: var(--cream);
+      border: 1px solid rgba(201,168,76,0.45);
+    }
+
+    /* ---------- Sections / cards ---------- */
+    section { padding: 30px 0; }
+
+    .card {
+      background: rgba(255,255,255,0.045);
+      border: 1px solid rgba(201,168,76,0.22);
+      border-radius: 16px;
+      padding: 30px 28px;
+      margin: 22px 0;
+      backdrop-filter: blur(2px);
+    }
+
+    h2 {
+      color: var(--gold-bright);
+      font-size: clamp(21px, 4vw, 27px);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h2 .glyph { color: var(--gold); font-size: 0.9em; }
+
+    p + p { margin-top: 12px; }
+    .muted { color: var(--cream-soft); }
+
+    /* ---------- Feature grid ---------- */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 8px;
+    }
+    .feature {
+      background: rgba(20,43,68,0.55);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .feature h3 {
+      color: var(--gold-bright);
+      font-size: 17px;
+      margin-bottom: 6px;
+    }
+    .feature p { font-size: 14.5px; color: var(--cream-soft); }
+    .feature .ico { font-size: 24px; display: block; margin-bottom: 8px; }
+
+    /* ---------- Data / legal ---------- */
+    ol.steps { margin: 10px 0 4px 20px; }
+    ol.steps li { margin-bottom: 8px; }
+
+    .mail {
+      display: inline-block;
+      margin-top: 6px;
+      font-weight: 600;
+      color: var(--gold-bright);
+    }
+
+    .legal-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    /* ---------- Footer ---------- */
+    footer {
+      text-align: center;
+      padding: 40px 0 60px;
+      color: var(--cream-soft);
+      font-size: 13.5px;
+      border-top: 1px solid rgba(201,168,76,0.18);
+      margin-top: 24px;
+    }
+    footer .studio { color: var(--gold-bright); font-weight: 600; }
+  </style>
 </head>
+
 <body>
-  <h1>Mahjong: Legends of the Nile</h1>
-  <p>Developer site for app verification.</p>
+  <div class="wrap">
+
+    <!-- ================= HERO ================= -->
+    <header class="hero">
+      <span class="ankh" aria-hidden="true">&#9765;</span>
+      <h1>Mahjong: Legends of the Nile</h1>
+      <p class="tagline">
+        An Egyptian-themed mahjong solitaire puzzle. Match the tiles, beat the
+        timer, keep your daily streak alive, and climb the Hall of Legends.
+        Free to play &mdash; no in-app purchases, ever.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-gold"
+           href="https://play.google.com/store/apps/details?id=com.blurred.legendsofthenile">
+          &#9654;&nbsp; Get it on Google Play
+        </a>
+        <a class="btn btn-stone" href="#support">Support &amp; Contact</a>
+      </div>
+    </header>
+
+    <!-- ================= ABOUT ================= -->
+    <section id="about">
+      <div class="card">
+        <h2><span class="glyph">&#9670;</span> About the Game</h2>
+        <p>
+          Journey down the Nile through the Age of the Pharaohs in this relaxing
+          yet challenging mahjong solitaire experience. Clear beautifully
+          illustrated hieroglyph tiles across hundreds of hand-crafted and
+          procedurally generated boards &mdash; every one guaranteed solvable.
+        </p>
+        <p class="muted">
+          Designed to be friendly for newcomers and satisfying for puzzle
+          veterans: a gentle guided tutorial, five signature power-ups, and a
+          difficulty curve that grows with you.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= FEATURES ================= -->
+    <section id="features">
+      <div class="card">
+        <h2><span class="glyph">&#9670;</span> Game Features</h2>
+        <div class="features">
+          <div class="feature">
+            <span class="ico" aria-hidden="true">&#128220;</span>
+            <h3>Hundreds of Levels</h3>
+            <p>Endless, always-solvable boards from gentle Easy to fiendish Expert.</p>
+          </div>
+          <div class="feature">
+            <span class="ico" aria-hidden="true">&#128302;</span>
+            <h3>5 Signature Power-Ups</h3>
+            <p>Eye of Horus hint, Sandstorm Shuffle, Ankh Undo, Ra's Time Freeze &amp; Pharaoh's Auto-Match.</p>
+          </div>
+          <div class="feature">
+            <span class="ico" aria-hidden="true">&#127942;</span>
+            <h3>Leaderboards</h3>
+            <p>Compete in the Hall of Legends and chase the weekly top scores.</p>
+          </div>
+          <div class="feature">
+            <span class="ico" aria-hidden="true">&#127873;</span>
+            <h3>Daily Rewards</h3>
+            <p>Keep your streak alive for bonus power-ups every single day.</p>
+          </div>
+          <div class="feature">
+            <span class="ico" aria-hidden="true">&#127760;</span>
+            <h3>5 Languages</h3>
+            <p>English, Spanish, French, German &amp; Arabic (with full right-to-left support).</p>
+          </div>
+          <div class="feature">
+            <span class="ico" aria-hidden="true">&#128241;</span>
+            <h3>Play Offline</h3>
+            <p>No connection needed &mdash; your progress syncs to the cloud when you sign in.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PRIVACY & DATA ================= -->
+    <section id="privacy">
+      <div class="card">
+        <h2><span class="glyph">&#9670;</span> Privacy &amp; Your Data</h2>
+        <p>
+          We collect only the minimum data needed to run the game, show ads, and
+          sync your progress. We never sell your personal data, and you can play
+          fully as a guest without sharing any personal information.
+        </p>
+        <div class="legal-links">
+          <a class="btn btn-stone" href="https://kamalc.github.io/legends-of-the-nile-legal/privacy">Privacy Policy</a>
+          <a class="btn btn-stone" href="https://kamalc.github.io/legends-of-the-nile-legal/terms">Terms of Service</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DELETE YOUR DATA ================= -->
+    <section id="delete-data">
+      <div class="card">
+        <h2><span class="glyph">&#9670;</span> Delete Your Data</h2>
+        <p>
+          You are always in control of your information. To request deletion of
+          your account and associated data:
+        </p>
+        <ol class="steps">
+          <li>Email us at the address below with the subject line
+            <strong>&ldquo;Data deletion request&rdquo;</strong>.</li>
+          <li>Include your in-game display name or Player ID
+            (found in <em>Settings &rarr; About</em>).</li>
+          <li>We will delete your cloud save, account record, and leaderboard
+            entries within <strong>7 days</strong> and confirm by email.</li>
+        </ol>
+        <p class="muted">
+          You can also remove all local data instantly by uninstalling the game
+          or using <em>Settings &rarr; Reset Progress</em> in-app.
+        </p>
+        <a class="mail" href="mailto:blurred.project.studio@gmail.com?subject=Data%20deletion%20request">
+          &#9993;&nbsp; blurred.project.studio@gmail.com
+        </a>
+      </div>
+    </section>
+
+    <!-- ================= SUPPORT ================= -->
+    <section id="support">
+      <div class="card">
+        <h2><span class="glyph">&#9670;</span> Support &amp; Contact</h2>
+        <p>
+          Found a bug, have a suggestion, or need help? We read every message and
+          usually reply within a couple of days.
+        </p>
+        <a class="mail" href="mailto:blurred.project.studio@gmail.com?subject=Legends%20of%20the%20Nile%20Support">
+          &#9993;&nbsp; blurred.project.studio@gmail.com
+        </a>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+      <p><span class="studio">Blurred Project</span> &middot; Based in Egypt</p>
+      <p class="muted">&copy; 2026 Blurred Project. All rights reserved.</p>
+    </footer>
+
+  </div>
 </body>
 </html>
